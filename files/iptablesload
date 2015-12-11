@@ -1,0 +1,4 @@
+#!/bin/sh
+iptables-restore < /etc/iptables.rules
+echo 1 > /proc/sys/net/ipv4/ip_forward
+exit 0

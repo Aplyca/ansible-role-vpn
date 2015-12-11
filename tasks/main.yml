@@ -1,7 +1,4 @@
 ---
-
-- debug: var=vpn
-
 - name: Make sure packages are present
   become: yes
   apt:
@@ -15,7 +12,7 @@
 
 - name: Get Public IP
   uri:
-    url: http://ipecho.net/plain
+    url: https://api.ipify.org
     return_content: yes
   register: public_ip
 
@@ -82,3 +79,33 @@
   notify:
       - restart ipsec
       - restart xl2tpd
+
+# This will work in Ansible 2.0
+#- name: Set IPTABLES
+#  become: yes
+#  iptables:
+#    table: nat
+#    chain: POSTROUTING
+#    source: 192.168.42.0/24
+#    in_interface: eth0
+#    jump: MASQUERADE
+#    comment: "Necessary for VPN"
+
+- name: Set IPTABLES Rules
+  become: yes
+  shell: "iptables -t nat -A POSTROUTING -s 192.168.42.0/24 -o eth0 -j MASQUERADE"
+
+- name: Set Ip Forward
+  become: yes
+  shell: "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
+- name: Save IPTABLES rules
+  become: yes
+  shell: "iptables-save > /etc/iptables.rules"
+
+- name: Configure IPTABLES load
+  become: yes
+  copy:
+    src: iptablesload
+    dest: "/etc/network/if-pre-up.d/iptablesload"
+    mode: "a+x"
