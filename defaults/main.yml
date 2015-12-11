@@ -1,0 +1,7 @@
+---
+vpn:
+    ipsec_psk: very_unsecure_key
+    users:
+        - name: johndoe
+          password: unsecure
+          ip: "*"

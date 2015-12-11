@@ -1,0 +1,9 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: Check if App is properly installed
+      stat:
+        path: "/tmp/myapp/app"
+      register: app_root
+      failed_when: not (app_root.stat.islnk is defined and app_root.stat.islnk)

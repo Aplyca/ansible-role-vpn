@@ -1,0 +1,15 @@
+---
+
+- name: restart ipsec
+  sudo: yes
+  service:
+    name: ipsec
+    state: restarted
+    enabled: yes
+
+- name: restart xl2tpd
+  sudo: yes
+  service:
+    name: xl2tpd
+    state: restarted
+    enabled: yes

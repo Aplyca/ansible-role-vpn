@@ -1,0 +1,9 @@
+dependencies:
+  pre:
+    - sudo pip install -r build/requirements.txt
+
+test:
+  pre:
+    - sudo ln -s ansible-role-vpn ../aplyca.VPN
+  override:
+    - tests/tests.sh
