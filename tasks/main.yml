@@ -93,15 +93,16 @@
 
 - name: Set IPTABLES Rules
   become: yes
-  shell: "iptables -t nat -A POSTROUTING -s 192.168.42.0/24 -o eth0 -j MASQUERADE"
+  template:
+    src: iptables.rules.j2
+    dest: /etc/iptables.rules
+  notify:
+      - restart ufw
 
 - name: Set Ip Forward
   become: yes
   shell: "echo 1 > /proc/sys/net/ipv4/ip_forward"
-
-- name: Save IPTABLES rules
-  become: yes
-  shell: "iptables-save > /etc/iptables.rules"
+  changed_when: False
 
 - name: Configure IPTABLES load
   become: yes
@@ -109,3 +110,5 @@
     src: iptablesload
     dest: "/etc/network/if-pre-up.d/iptablesload"
     mode: "a+x"
+  notify:
+      - restart ufw

@@ -5,3 +5,7 @@ vpn:
         - name: johndoe
           password: unsecure
           ip: "*"
+
+iptables:
+    rules:
+        - "-A POSTROUTING -s 192.168.42.0/24 -o eth0 -j MASQUERADE"           

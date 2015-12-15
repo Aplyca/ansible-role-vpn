@@ -1,15 +1,22 @@
 ---
 
 - name: restart ipsec
-  sudo: yes
+  become: yes
   service:
     name: ipsec
     state: restarted
     enabled: yes
 
 - name: restart xl2tpd
-  sudo: yes
+  become: yes
   service:
     name: xl2tpd
+    state: restarted
+    enabled: yes
+
+- name: restart ufw
+  become: yes
+  service:
+    name: ufw
     state: restarted
     enabled: yes
