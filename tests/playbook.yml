@@ -6,3 +6,8 @@
       shell: "ipsec --version"
       register: result
       failed_when: "'Linux Openswan' not in result.stdout"
+    - name: Test if IPSEC is properly installed
+      become: yes
+      shell: "ipsec verify"
+      register: result
+      failed_when: "'FAILED' in result.stdout"

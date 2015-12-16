@@ -80,6 +80,14 @@
       - restart ipsec
       - restart xl2tpd
 
+- name: Configure Kernel VPN support
+  become: yes
+  copy:
+    src: vpn-kernel.conf
+    dest: /etc/sysctl.d/99-vpn-kernel.conf
+  notify:
+      - reload sysctl
+
 # This will work in Ansible 2.0
 #- name: Set IPTABLES
 #  become: yes
@@ -90,6 +98,12 @@
 #    in_interface: eth0
 #    jump: MASQUERADE
 #    comment: "Necessary for VPN"
+
+- name:  Disable ICP redirects
+  become: yes
+  shell: "for vpn in /proc/sys/net/ipv4/conf/*; do echo 0 > $vpn/accept_redirects; echo 0 > $vpn/send_redirects; done"
+  changed_when: False
+
 
 - name: Set IPTABLES Rules
   become: yes
