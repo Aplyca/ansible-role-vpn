@@ -44,7 +44,9 @@ Use tags to run a specific feature in the provisioning, i.e: to update the users
 
 Update users:
 
+```bash
 ansible-playbook -i inventories/local playbooks.yml --tags users
+```
 
 Testing
 -------
