@@ -20,12 +20,12 @@ Installation
 
 Using ansible galaxy:
 ```bash
-ansible-galaxy install aplyca.VPN
+ansible-galaxy install Aplyca.VPN
 ```
 You can add this role as a dependency for other roles, add the role to the meta/main.yml file of your own role:
 ```yaml
 dependencies:
-  - { role: aplyca.VPN }
+  - { role: Aplyca.VPN }
 ```
 
 Role Variables
@@ -35,7 +35,16 @@ See default variables: https://github.com/Aplyca/ansible-role-vpn/blob/master/de
 Dependencies
 ------------
 
-- Git
+None
+
+Running feature provision
+-------------------------
+
+Use tags to run a specific feature in the provisioning, i.e: to update the users you can run the following command:
+
+Update users:
+
+ansible-playbook -i inventories/local playbooks.yml --tags users
 
 Testing
 -------
