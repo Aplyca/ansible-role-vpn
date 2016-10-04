@@ -1,4 +1,7 @@
 ---
+- debug: var=vpn verbosity=1
+  tags: vars
+
 - name: Make sure packages are present
   become: yes
   apt:

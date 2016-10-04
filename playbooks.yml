@@ -4,9 +4,6 @@
   gather_facts: no
   roles:
     - { role: Aplyca.VPN, tags: ["vpn"] }
-  tasks:
-    - debug: var=vpn
-      tags: vars
   post_tasks:
     - name: Test if IPSEC is installed
       shell: "ipsec --version"
