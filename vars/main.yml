@@ -1,0 +1,6 @@
+---
+vpn:
+  packages:
+    - ufw
+    - strongswan
+    - xl2tpd

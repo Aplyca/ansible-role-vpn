@@ -9,16 +9,14 @@
     state: present
     update_cache: yes
     cache_valid_time: 86400
-  with_items:
-      - ufw
-      - openswan
-      - xl2tpd
+  with_items: "{{ vpn.packages }}"
 
 - name: Get Public IP
   uri:
     url: https://api.ipify.org
     return_content: yes
   register: public_ip
+  tags: vpn_config
 
 - name: Configure IPSEC main setup
   become: yes
@@ -56,7 +54,7 @@
   notify:
       - restart ipsec
       - restart xl2tpd
-  tags: config
+  tags: vpn_config
 
 - name: Configure xl2tpd
   become: yes
